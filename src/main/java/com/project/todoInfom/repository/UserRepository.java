@@ -1,5 +1,10 @@
 package com.project.todoInfom.repository;
 
-public interface UserRepository {
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.project.todoInfom.model.User;
+
+public interface UserRepository extends JpaRepository<User, Long>{
 
 }
