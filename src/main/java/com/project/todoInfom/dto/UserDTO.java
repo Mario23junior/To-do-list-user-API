@@ -1,10 +1,14 @@
 package com.project.todoInfom.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class UserDTO {
   
 	private Long id;
 	private String nome;	
  	private String email;
+ 	
+ 	@JsonIgnore
 	private String password;
 	
 	public UserDTO() {
