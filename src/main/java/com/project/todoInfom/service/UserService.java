@@ -4,5 +4,5 @@ import com.project.todoInfom.model.User;
 
 public interface UserService {
   
-	User findById(long id);
+	User findById(Long id);
 }
