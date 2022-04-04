@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.todoInfom.dto.UserDTO;
+import com.project.todoInfom.exceptions.IntegrityViolationOnlyException;
 import com.project.todoInfom.exceptions.ObjectNotFoundExecution;
 import com.project.todoInfom.model.User;
 import com.project.todoInfom.repository.UserRepository;
@@ -36,6 +37,32 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User creaet(UserDTO obj) {
+		ByEmail(obj);
  		return repository.save(mapper.map(obj, User.class));
 	}
+	
+	private void ByEmail(UserDTO userDto) {
+		Optional<User> user = repository.findByEmail(userDto.getEmail());
+		if(user.isPresent()) {
+		    throw new IntegrityViolationOnlyException("O E-mail "+userDto.getEmail()+" Já existe um cadastro com este e-mail");	
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
