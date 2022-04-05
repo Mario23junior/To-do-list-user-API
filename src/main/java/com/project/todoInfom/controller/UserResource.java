@@ -1,7 +1,7 @@
 package com.project.todoInfom.controller;
 
-import java.net.URI;
-import java.util.List;
+ import java.net.URI;
+  import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -44,7 +44,7 @@ public class UserResource {
 		List<UserDTO> listDto = list.stream().map( l -> mapper.map(l, UserDTO.class)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
  	}
-	
+ 	
 	@PostMapping
 	public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDto) {
 		User newUserDto = service.creaet(userDto);

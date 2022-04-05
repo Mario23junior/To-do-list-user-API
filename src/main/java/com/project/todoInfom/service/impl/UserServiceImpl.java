@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 	public List<User> ListAllBase() {
  		return repository.findAll();
 	}
-
+ 
 	@Override
 	public User creaet(UserDTO obj) {
 		ByEmail(obj);
@@ -47,6 +47,26 @@ public class UserServiceImpl implements UserService {
 		    throw new IntegrityViolationOnlyException("O E-mail "+userDto.getEmail()+" Já existe um cadastro com este e-mail");	
 		}
 	}
+<<<<<<< HEAD
+=======
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> b4eac26702150bbeebb6e10580a2f4f7f6d92507
 
 	@Override
 	public User update(UserDTO obj) {
