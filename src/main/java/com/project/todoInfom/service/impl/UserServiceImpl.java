@@ -43,10 +43,12 @@ public class UserServiceImpl implements UserService {
 	
 	private void ByEmail(UserDTO userDto) {
 		Optional<User> user = repository.findByEmail(userDto.getEmail());
-		if(user.isPresent()) {
+		if(user.isPresent() && !user.get().getId().equals(userDto.getId())) {
 		    throw new IntegrityViolationOnlyException("O E-mail "+userDto.getEmail()+" Já existe um cadastro com este e-mail");	
 		}
 	}
+<<<<<<< HEAD
+=======
  }
 
 
@@ -64,5 +66,18 @@ public class UserServiceImpl implements UserService {
 
 
 
+>>>>>>> b4eac26702150bbeebb6e10580a2f4f7f6d92507
 
+	@Override
+	public User update(UserDTO obj) {
+		ByEmail(obj);
+		return repository.save(mapper.map(obj, User.class));
+	}
 
+	@Override
+	public void delete(Long id) {
+		findById(id);
+		repository.deleteById(id);
+	}
+	
+}

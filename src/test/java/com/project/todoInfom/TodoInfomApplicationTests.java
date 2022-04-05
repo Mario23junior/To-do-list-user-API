@@ -1,13 +1,19 @@
 package com.project.todoInfom;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.runner.RunWith;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@SpringBootTest
+@EnableAutoConfiguration
+@RunWith(SpringRunner.class)
 class TodoInfomApplicationTests {
 
 	@Test
-	void contextLoads() {
+	@DisplayName("Teste a classe principal")
+ 	void main() {
+		TodoInfomApplication.main(new String[] {});
 	}
 
 }
