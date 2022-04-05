@@ -9,5 +9,7 @@ public interface UserService {
   
 	User findById(Long id);
 	List<User> ListAllBase();
-	User  creaet(UserDTO obj);
+	User creaet(UserDTO obj);
+	User update(UserDTO obj);
+	void delete(Long id);
 }
