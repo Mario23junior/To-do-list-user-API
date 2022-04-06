@@ -2,10 +2,10 @@ package com.project.todoInfom.service.impl;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.project.todoInfom.dto.UserDTO;
+import com.project.todoInfom.exceptions.ObjectNotFoundExecution;
 import com.project.todoInfom.model.User;
 import com.project.todoInfom.repository.UserRepository;
 
@@ -40,6 +41,8 @@ public class UserServiceImplTest {
 	String NAME = "Orochimaro";
 	String EMAIL = "tioOrochimaru@gmai.com";
 	String PASSWORD = "123";
+	String ErrorReturnMesaage = "O id "+ID+" não foi encontrado pois não "
+			+ "existe cadastro associado a este ID";
 
 	@BeforeEach
 	void setUp() {
@@ -60,6 +63,21 @@ public class UserServiceImplTest {
 		assertEquals(NAME, response.getNome());
 		assertEquals(EMAIL, response.getEmail());
 
+	}
+	
+	
+	@Test
+	@DisplayName("Teste de falha de listagem de usuario por ID ")
+	void WhenFindByIdThenReturnAnObjectNotFundException() {
+		Mockito.when(repository.findById(anyLong())).thenThrow(new ObjectNotFoundExecution(ErrorReturnMesaage));	
+		
+		try {
+			service.findById(ID);
+		} catch (Exception ex) {
+			assertEquals(ObjectNotFoundExecution.class, ex.getClass());
+			assertEquals(ErrorReturnMesaage, ex.getMessage());
+ 		}
+		
 	}
 
 	@Test
