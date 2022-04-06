@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -81,7 +82,22 @@ public class UserServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("Testando listagem de todos os usuarios")
 	void findAll() {
+       Mockito.when(repository.findAll()).thenReturn(List.of(user));
+       
+       List<User> response = service.ListAllBase();
+       
+       assertNotNull(response);
+       assertEquals(1L, response.size());
+       int INDEXInput = 0;
+	assertEquals(User.class, response.get(INDEXInput).getClass());
+       
+       assertEquals(ID, response.get(INDEXInput).getId());
+       assertEquals(NAME, response.get(INDEXInput).getNome());
+       assertEquals(EMAIL, response.get(INDEXInput).getEmail());
+       assertEquals(PASSWORD, response.get(INDEXInput).getPassword());
+
 
 	}
 
