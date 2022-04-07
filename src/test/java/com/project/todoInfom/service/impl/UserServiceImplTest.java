@@ -126,13 +126,25 @@ public class UserServiceImplTest {
 			service.creaet(userDto);
 		} catch (Exception ex) {
 			assertEquals(IntegrityViolationOnlyException.class, ex.getClass());
-			assertEquals("O E-mail "+userDto.getEmail()+" Já existe um cadastro com este e-mail", ex.getMessage());
+			assertEquals("O E-mail " + userDto.getEmail() + " Já existe um cadastro com este e-mail", ex.getMessage());
 		}
 
 	}
 
 	@Test
-	void update() {
+	@DisplayName("Teste de Atualizaçãoes de informações retornando sucesso")
+	void whenUpdateTheReturnSuccess() {
+		Mockito.when(repository.save(any())).thenReturn(user);
+
+		User response = service.update(userDto);
+
+		assertNotNull(response);
+		assertEquals(User.class, response.getClass());
+		assertEquals(ID, response.getId());
+		assertEquals(EMAIL, response.getEmail());
+		assertEquals(NAME, response.getNome());
+		assertEquals(PASSWORD, response.getPassword());
+	
 
 	}
 
