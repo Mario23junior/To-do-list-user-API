@@ -2,6 +2,7 @@ package com.project.todoInfom.service.impl;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 
 import java.util.List;
@@ -102,9 +103,21 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	void create() {
-
+	@DisplayName("Ao criar um novo usuario retornar sucesso")
+	void whenCreateTheReturnSuccess() {  
+       Mockito.when(repository.save(any())).thenReturn(user);
+       
+       User response = service.creaet(userDto);
+       
+       assertNotNull(response);
+       assertEquals(User.class, response.getClass());
+       assertEquals(ID, response.getId());
+       assertEquals(EMAIL, response.getEmail());
+       assertEquals(NAME, response.getNome());
+       assertEquals(PASSWORD, response.getPassword());
 	}
+	
+	
 
 	@Test
 	void update() {
