@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 
 import java.util.List;
 import java.util.Optional;
@@ -147,7 +149,7 @@ public class UserServiceImplTest {
 	}
 	
 	@Test
-	@DisplayName("Teste de  atualização violada de email epetidos, retornando exceptions")
+	@DisplayName("Teste de atualização violada de email epetidos, retornando exceptions")
 	void whenUpdateTheReturnAndVioletionData() {
 		Mockito.when(repository.findByEmail(anyString())).thenReturn(optionalUser);
 
@@ -162,9 +164,14 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	void delete() {
-
-	}
+	@DisplayName("Teste de exclusao retornando sucesso")
+	void deleteWithSucesso() {
+       Mockito.when(repository.findById(anyLong())).thenReturn(optionalUser);
+       
+       doNothing().when(repository).deleteById(anyLong());
+	   service.delete(ID);
+	   Mockito.verify(repository, times(1)).deleteById(anyLong());
+       }
 
 	private void startUser() {
 		user = new User(ID, NAME, EMAIL, PASSWORD);
