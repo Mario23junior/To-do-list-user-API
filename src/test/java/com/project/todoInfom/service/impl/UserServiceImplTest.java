@@ -117,7 +117,7 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	@DisplayName("Teste de violação de emails repetidos retornar exceptions")
+	@DisplayName("Teste de violação de IDs repetidos retornar exceptions")
 	void whenCreateTheReturnAndVioletionData() {
 		Mockito.when(repository.findByEmail(anyString())).thenReturn(optionalUser);
 
@@ -144,7 +144,20 @@ public class UserServiceImplTest {
 		assertEquals(EMAIL, response.getEmail());
 		assertEquals(NAME, response.getNome());
 		assertEquals(PASSWORD, response.getPassword());
+	}
 	
+	@Test
+	@DisplayName("Teste de  atualização violada de email epetidos, retornando exceptions")
+	void whenUpdateTheReturnAndVioletionData() {
+		Mockito.when(repository.findByEmail(anyString())).thenReturn(optionalUser);
+
+		try {
+			optionalUser.get().setId(2L);
+			service.creaet(userDto);
+		} catch (Exception ex) {
+			assertEquals(IntegrityViolationOnlyException.class, ex.getClass());
+			assertEquals("O E-mail " + userDto.getEmail() + " Já existe um cadastro com este e-mail", ex.getMessage());
+		}
 
 	}
 
