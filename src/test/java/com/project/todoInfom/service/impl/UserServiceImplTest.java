@@ -2,8 +2,10 @@ package com.project.todoInfom.service.impl;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -81,14 +83,41 @@ public class UserServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("Testando listagem de todos os usuarios")
 	void findAll() {
+       Mockito.when(repository.findAll()).thenReturn(List.of(user));
+       
+       List<User> response = service.ListAllBase();
+       
+       assertNotNull(response);
+       assertEquals(1L, response.size());
+       int INDEXInput = 0;
+	assertEquals(User.class, response.get(INDEXInput).getClass());
+       
+       assertEquals(ID, response.get(INDEXInput).getId());
+       assertEquals(NAME, response.get(INDEXInput).getNome());
+       assertEquals(EMAIL, response.get(INDEXInput).getEmail());
+       assertEquals(PASSWORD, response.get(INDEXInput).getPassword());
+
 
 	}
 
 	@Test
-	void create() {
-
+	@DisplayName("Ao criar um novo usuario retornar sucesso")
+	void whenCreateTheReturnSuccess() {  
+       Mockito.when(repository.save(any())).thenReturn(user);
+       
+       User response = service.creaet(userDto);
+       
+       assertNotNull(response);
+       assertEquals(User.class, response.getClass());
+       assertEquals(ID, response.getId());
+       assertEquals(EMAIL, response.getEmail());
+       assertEquals(NAME, response.getNome());
+       assertEquals(PASSWORD, response.getPassword());
 	}
+	
+	
 
 	@Test
 	void update() {
