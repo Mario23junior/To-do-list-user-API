@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +18,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.project.todoInfom.controller.UserResource;
@@ -27,7 +30,7 @@ import com.project.todoInfom.service.UserService;
 public class UserControllerTest {
 
 	@InjectMocks
-	private UserResource resurce;
+	private UserResource resource;
 
 	@Mock
 	private UserService service;
@@ -43,6 +46,7 @@ public class UserControllerTest {
 	private User user;
 	private UserDTO userDto;
 	private Optional<User> optionalUser;
+	private int INDEX = 0;
 
 	@BeforeEach
 	void setUp() {
@@ -51,12 +55,12 @@ public class UserControllerTest {
 	}
 
 	@Test
-	@DisplayName("Controller de listagem de usuario por id")
+	@DisplayName("Teste de listagem de usuario por id")
 	void whenFindFindByIdReturnSucesso() {
 		when(service.findById(Mockito.anyLong())).thenReturn(user);
 		when(mapper.map(any(), any())).thenReturn(userDto);
 
-		ResponseEntity<UserDTO> response = resurce.findById(ID);
+		ResponseEntity<UserDTO> response = resource.findById(ID);
 
 		assertNotNull(response);
 		assertNotNull(response.getBody());
@@ -70,8 +74,27 @@ public class UserControllerTest {
 	}
 
 	@Test
-	void findAll() {
+	@DisplayName("Teste de listagem de todos os usuarios esperando sucessos")
+	void WhenFindAllThenReturnListOfUserDto() {
+	   when(service.ListAllBase()).thenReturn(List.of(user));
+	   when(mapper.map(any(), any())).thenReturn(userDto);
+	   
+	   ResponseEntity<List<UserDTO>> response = resource.findAllData();
+	   
+	   assertNotNull(response);
+	   assertNotNull(response.getBody());
+	   
+	   assertEquals(HttpStatus.OK,response.getStatusCode());
+	   assertEquals(ResponseEntity.class, response.getClass());
+	   assertEquals(ArrayList.class, response.getBody().getClass());
+	   assertEquals(UserDTO.class, response.getBody().get(INDEX).getClass());
+	   
+	   assertEquals(ID, response.getBody().get(INDEX).getId());
+	   assertEquals(NAME, response.getBody().get(INDEX).getNome());
+	   assertEquals(EMAIL, response.getBody().get(INDEX).getEmail());
+	   assertEquals(PASSWORD, response.getBody().get(INDEX).getPassword());
 
+	   
 	}
 
 	@Test

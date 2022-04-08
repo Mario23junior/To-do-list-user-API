@@ -42,6 +42,8 @@ public class UserServiceImplTest {
 	private User user;
 	private UserDTO userDto;
 	private Optional<User> optionalUser;
+	int INDEXInput = 0;
+
 
 	Long ID = 1L;
 	String NAME = "Orochimaro";
@@ -93,7 +95,6 @@ public class UserServiceImplTest {
 
 		assertNotNull(response);
 		assertEquals(1L, response.size());
-		int INDEXInput = 0;
 		assertEquals(User.class, response.get(INDEXInput).getClass());
 
 		assertEquals(ID, response.get(INDEXInput).getId());
