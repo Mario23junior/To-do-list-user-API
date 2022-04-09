@@ -5,6 +5,7 @@ public class ObjectNotFoundExecution extends RuntimeException {
 
 	public ObjectNotFoundExecution(String message) {
 		super(message);
+		message = "Objeto não foi encontrado";
 
 	}
 }

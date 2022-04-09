@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 
- import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,11 +28,11 @@ public class ErrorHandlingReturn {
 	}
 	
 	@ExceptionHandler(IntegrityViolationOnlyException.class)
-	public ResponseEntity<modelErroCustom> dataIntegrationVioletion(IntegrityViolationOnlyException ex, HttpServletRequest request) {
+	public ResponseEntity<modelErroCustom> dataIntegrationVioletion(DataIntegrityViolationException dataIntegrityViolationException, HttpServletRequest request) {
 		modelErroCustom erro = new modelErroCustom(
 				LocalDateTime.now(),
 				HttpStatus.BAD_REQUEST.value(),
-				ex.getMessage(),
+				dataIntegrityViolationException.getMessage(),
 				request.getRequestURI());
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
