@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,6 @@ public class exceptions {
 
 	}
 
-	
 	void WhenObjectNotFoundExcepObjectNotFoundExecution() {
 		ResponseEntity<modelErroCustom> response = exceptionsHandler.objectNotFundReturn(
 				new ObjectNotFoundExecution("Objeto não foi encontrado"),
