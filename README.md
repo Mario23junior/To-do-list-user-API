@@ -25,7 +25,7 @@
 <h1 align="center"></h1>
 
 <h3 align="center">
-  Controle de usuarios e validação de informações abrangemdo 
+    Controle de usuários e validação de informações abrangendo entrada e saída de informações, organizacional
  </a>
  <p align="center">
  
